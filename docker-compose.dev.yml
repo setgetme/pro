@@ -1,0 +1,27 @@
+version: '2'
+services:
+  www:
+    ports:
+      - 8080:80
+    volumes:
+      - .:/var/www
+  fpm:
+    entrypoint: ['php-fpm']
+    volumes:
+      - .:/var/www
+      - ./docker/fpm/xdebug.ini/:/usr/local/etc/php/conf.d/xdebug.ini
+  db:
+    image: mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=pro
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8083:80"
+    links:
+      - db
+    environment:
+      - PMA_HOST=db

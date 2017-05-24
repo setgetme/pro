@@ -1,0 +1,22 @@
+version: '2'
+services:
+  www:
+    build: ./docker/www
+    ports:
+      - 8080:80
+    volumes_from:
+      - fpm
+  fpm:
+    build: ./
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    links:
+      - db
+  db:
+    image: mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=k4g
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root
