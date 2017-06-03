@@ -1,19 +1,18 @@
-# This file is a "template" of what your parameters.yml file should look like
-# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
-# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+# This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
-    database_port: ~
-    database_name: symfony
+    database_host: db
+    database_port: null
+    database_name: pro
     database_user: root
-    database_password: ~
-    # You should uncomment this if you want to use pdo_sqlite
-    #database_path: '%kernel.root_dir%/../var/data/data.sqlite'
-
-    mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: ~
-    mailer_password: ~
-
-    # A secret key that's used to generate certain security-related tokens
-    secret: ThisTokenIsNotSoSecretChangeIt
+    database_password: root
+    mailer_transport: gmail
+    mailer_password: password
+    mailer_user: email
+    mailer_project: Pro
+    secret: 2fafea4c20c658b5b644891016f275a45e049def
+    facebook_client_id: 1091449860959974
+    facebook_client_secret: 4a23646e818a9734444e69b8e9ad1230
+    activation_url: accout-activation/
+    remind_password_url: remind-password/
+    symfony_url: '%env(SYMFONY_URL)%'
+    env(SYMFONY_URL): 'http://localhost:8080/'

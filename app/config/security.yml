@@ -1,24 +1,33 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
 security:
-
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        AppBundle\Entity\User: bcrypt
     providers:
-        in_memory:
-            memory: ~
-
+        db_provider:
+            entity:
+                class: AppBundle:User
+        hwi:
+            id: user.social_oauth_user_provider
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
+        secured_area:
             anonymous: ~
-            # activate different ways to authenticate
+            logout:
+                path:   /user/logout
+                success_handler: user.listener.logout
+                invalidate_session: false
+                target: /
+            oauth:
+                resource_owners:
+                    facebook:          "/login/check-facebook"
+                login_path:        /user/login
+                use_forward:       false
+                failure_path:      /user/login
+                default_target_path: /
+                oauth_user_provider:
+                    service: user.social_oauth_user_provider
+            guard:
+                authenticators:
+                    - user.security.authentication.login_form
+                entry_point: user.security.authentication.login_form
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

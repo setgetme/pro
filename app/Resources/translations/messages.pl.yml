@@ -1,0 +1,53 @@
+header:
+  menu:
+    user:
+      logout: wyloguj
+      edit: edytuj profil
+      registration: rejestracja
+      login: logowanie
+user:
+  exception:
+    authentication:
+      inactive_user: użytkownik nieaktywny
+      incorrect_password: niepoprawne hasło
+      password_notblank: hasło nie może być puste
+      social_email_notblank: musisz udostępnić adres email
+      email_notblank: podaj adres email
+      user_not_found: podany użytkownik nie istnieje
+  edit_account:
+    first_name: imię
+    last_name: nazwisko
+    city: miasto
+    phone_number: telefon
+    avatar: avatar
+    save: zapisz zmiany
+  remind_password:
+    email: email
+    remind_password: przypomnij hasło
+  login:
+    email: email
+    password: hasło
+    login: zaloguj
+    remind_password: przypomnij hasło
+  change_password: zmień hasło
+  logout: zostałeś wylogowany
+  new_password:
+    new_password: nowe hasło
+    password_first: hasło
+    password_repeat: powtórz hasło
+    save: zapisz
+    password:
+      must_match: hasła muszą do siebie pasować
+  create_account:
+    email: email
+    password_first: hasło
+    password_repeat: powtórz hasło
+    first_name: imie
+    last_name: nazwisko
+    city: miasto
+    post_code: kod pocztowy
+    address: adres
+    phone_number: telefon
+    terms_accepted_at: akceptuj regulamin
+    registration: zarejestruj
+    create_by_fb: logowanie przez facebook'a

@@ -1,0 +1,35 @@
+services:
+  manager.user:
+    class: AppBundle\Services\UserManager
+    arguments: ["@security.encoder_factory", "@doctrine.orm.default_entity_manager", "@event_dispatcher"]
+
+  user.social_oauth_user_provider:
+    class: AppBundle\Services\SocialOAuthUserProvider
+    tags:
+      - { name: user.provider }
+    arguments: ["@doctrine.orm.default_entity_manager", "@manager.user"]
+
+  user.listener.logout:
+     class:  AppBundle\Events\Listener\LogoutListener
+     arguments: ['@session', '@translator']
+
+  mailer.user:
+     class: AppBundle\Mailer\UserMailer
+     arguments: ["@translator", "@templating", "@mailer", '%mailer_user%', '%mailer_project%', '%activation_url%', '%remind_password_url%', '%symfony_url%']
+
+  listener.remind_password_mailer:
+     class: AppBundle\Events\Listener\RemindPasswordMailerListener
+     arguments: ["@mailer.user", "@doctrine.orm.entity_manager"]
+     tags:
+         - { name: kernel.event_listener, event: remind.password, method: onRemindPassword }
+
+  listener.activation_mailer:
+     class: AppBundle\Events\Listener\ActivationMailerListener
+     arguments: ["@mailer.user", "@doctrine.orm.entity_manager"]
+     tags:
+         - { name: kernel.event_listener, event: user.registered, method: onRegister }
+
+  user.security.authentication.login_form:
+     class: AppBundle\Security\Authentication\Guard\LoginFormAuthenticator
+     public: false
+     arguments: ['@manager.user', '@doctrine.orm.entity_manager', '@router']

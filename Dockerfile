@@ -15,11 +15,10 @@ WORKDIR /var/www
 RUN cp /var/www/app/config/parameters.yml.dist /var/www/app/config/parameters.yml
 RUN cd /var/www && SYMFONY_ENV=prod composer install --prefer-dist --dev --optimize-autoloader --no-scripts
 RUN chmod -R 777 ./var/
+RUN chmod -R 777 ./web/uploads
 
 COPY docker/fpm/entrypoint.sh /usr/bin
 RUN chmod +x /usr/bin/entrypoint.sh
-
-
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 CMD ["php-fpm"]

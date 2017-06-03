@@ -1,0 +1,38 @@
+    {% if error is defined and error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData) }}</div>
+    {% endif %}
+
+    {% for key,flashMessage in app.session.flashBag.all() %}
+        {% if key == 'error' %}
+            {% set type = 'danger' %}
+        {% else %}
+            {% set type = key %}
+        {% endif %}
+        <div class="alert alert-{{ type }}">
+            {{ flashMessage | join(', ') }}
+        </div>
+    {% endfor %}
+    {{ app.session.flashBag.clear() ? '' }}
+
+    <form action="{{ path('user.login') }}" method="post">
+        <input type="hidden" name="_target_path" value="/profile" />
+        <div class="form-group input-with-icon mb-5">
+            <i class="fi flaticon-social"></i>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control input-lg" placeholder="{{ 'user.login.email' | trans }}"/>
+        </div>
+        <div class="form-group input-with-icon">
+            <i class="fi flaticon-padlock"></i>
+            <input type="password" id="password" name="_password" class="form-control input-lg" placeholder="{{ 'user.login.password' | trans }}" />
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg btn-block">{{ 'user.login.login' | trans }} <i class="i-after fi flaticon-right-arrow"></i></button>
+        <a href="{{ path('user.create') }}" class="btn btn-link btn-lg text-primary">{{ 'user.create_account.registration' | trans }}</a>
+
+        {% block hwi_oauth_content %}
+            {% for owner in hwi_oauth_resource_owners() %}
+                <a href="{{ hwi_oauth_login_url(owner) }}" class="btn btn-{{ owner }} btn-lg btn-block"><i class="i-before ti-{{ owner }}"></i>{{ 'user.create_account.create_by_fb' | trans({'%social%' : owner|capitalize}) }}</a>
+            {% endfor %}
+        {% endblock hwi_oauth_content %}
+    </form>
+
+    <a href="{{ path('user.remind_password') }}" class="btn btn-link btn-lg text-primary">{{ 'user.login.remind_password' | trans }}</a>

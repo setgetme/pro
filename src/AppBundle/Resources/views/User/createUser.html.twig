@@ -1,0 +1,21 @@
+{% for key,flashMessage in app.session.flashBag.all() %}
+    {% if key == 'error' %}
+        {% set type = 'danger' %}
+    {% else %}
+        {% set type = key %}
+    {% endif %}
+    <div class="alert alert-{{ type }}">
+        {{ flashMessage | join(', ') }}
+    </div>
+{% endfor %}
+{{ app.session.flashBag.clear() ? '' }}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+{% block hwi_oauth_content %}
+    {% for owner in hwi_oauth_resource_owners() %}
+        <a href="{{ hwi_oauth_login_url(owner) }}" class="btn btn-{{ owner }} btn-lg btn-block"><i class="i-before ti-{{ owner }}"></i>{{ 'user.create_account.create_by_fb' | trans({'%social%' : owner|capitalize}) }}</a>
+    {% endfor %}
+{% endblock hwi_oauth_content %}
