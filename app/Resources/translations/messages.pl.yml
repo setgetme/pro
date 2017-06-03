@@ -6,6 +6,25 @@ header:
       registration: rejestracja
       login: logowanie
 user:
+  validation:
+    terms_accepted_at:
+      notblank: akceptacja regulaminu jest wymagana
+    password:
+      notblank: hasło jest wymagane
+      min_length: hasło musi być dłuższe niż 7 znaków
+      max_length: hasło jest za długie
+    phone_number:
+      min_length: podany telefon jest nieprawidłowy
+      max_length: podany telefon jest nieprawidłowy
+    firstname:
+      notblank: imię jest wymagane
+      min_length: imię musi być dłuższe niż 2 znaki
+      max_length: imię jest za długie
+    lastname:
+      notblank: nazwisko jest wymagane
+    email:
+      notblank: email jest wymagany
+      unique: Podany adres email istnieje w systemie
   exception:
     authentication:
       inactive_user: użytkownik nieaktywny

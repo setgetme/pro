@@ -101,7 +101,6 @@ class User implements UserInterface, AdvancedUserInterface
 
     /**
      * @ORM\Column(name="is_active", type="boolean", nullable = false)
-     * @Assert\NotBlank(message="user.validation.isActive.notblank", groups={"admin_registration"})
      */
     protected $isActive;
 
